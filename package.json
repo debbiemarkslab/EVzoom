@@ -1,0 +1,29 @@
+{
+  "name": "evzoom",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/evzoom.js",
+  "scripts": {
+    "build": "rollup -c && uglifyjs build/evzoom.dev.js -cm > dist/evzoom.js"
+  },
+  "homepage": "https://github.com/debbiemarkslab/EVzoom",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/debbiemarkslab/EVzoom.git"
+  },
+  "bugs": {
+    "url": "https://github.com/debbiemarkslab/EVzoom/issues"
+  },
+  "author": "John Ingraham <john.ingraham@gmail.com>",
+  "contributors": [],
+  "license": "",
+  "keywords": [
+    "Coevolution",
+    "Undirected graphical model"
+  ],
+  "devDependencies": {
+    "d3": "^4.0.0",
+    "rollup-plugin-node-resolve": "^2.0.0"
+  },
+  "dependencies": {}
+}
