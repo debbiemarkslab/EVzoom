@@ -878,26 +878,36 @@ EVzoom.buildSVG = function() {
     .attr("mode", "normal");
 
   // Draw gridlines
-  for (var i = 0; i < EVzoom.logo.data.length; i += EVzoom.grid.spacing) {
-    // Horizontal
-    plot.append("line")
-      .attr("x1", EVzoom.axis.left)
-      .attr("y1", EVzoom.jToY(i))
-      .attr("x2", EVzoom.axis.right)
-      .attr("y2", EVzoom.jToY(i))
-      .attr("stroke", EVzoom.grid.color)
-      .attr("stroke-width", EVzoom.grid.lineWidth);
+  for (var i = 0; i < EVzoom.logo.data.length; i++) {
+    console.log(EVzoom.map.indices[i])
+    if (EVzoom.map.indices[i] % EVzoom.grid.spacing == 0) {
+      // Horizontal
+      plot.append("line")
+        .attr("x1", EVzoom.axis.left)
+        .attr("y1", EVzoom.jToY(i))
+        .attr("x2", EVzoom.axis.right)
+        .attr("y2", EVzoom.jToY(i))
+        .attr("stroke", EVzoom.grid.color)
+        .attr("stroke-width", EVzoom.grid.lineWidth);
 
-    // Vertical
-    plot.append("line")
-      .attr("x1", EVzoom.iToX(i))
-      .attr("y1", EVzoom.axis.top)
-      .attr("x2", EVzoom.iToX(i))
-      .attr("y2", EVzoom.axis.bottom)
+      // Vertical
+      plot.append("line")
+        .attr("x1", EVzoom.iToX(i))
+        .attr("y1", EVzoom.axis.top)
+        .attr("x2", EVzoom.iToX(i))
+        .attr("y2", EVzoom.axis.bottom)
+        .attr("stroke", EVzoom.grid.color)
+        .attr("stroke-width", EVzoom.grid.lineWidth);
+    }
+  }
+  // Horizontal Top & Bottom
+  plot.append("line")
+      .attr("x1", EVzoom.axis.left)
+      .attr("x2", EVzoom.axis.right)
+      .attr("y1", EVzoom.jToY(0))
+      .attr("y2", EVzoom.jToY(0))
       .attr("stroke", EVzoom.grid.color)
       .attr("stroke-width", EVzoom.grid.lineWidth);
-  }
-  // Horizontal Bottom
   plot.append("line")
       .attr("x1", EVzoom.axis.left)
       .attr("x2", EVzoom.axis.right)
@@ -905,7 +915,14 @@ EVzoom.buildSVG = function() {
       .attr("y2", EVzoom.jToY(0) + EVzoom.plotHeight())
       .attr("stroke", EVzoom.grid.color)
       .attr("stroke-width", EVzoom.grid.lineWidth);
-  // Vertical Right
+  // Vertical Left & Right
+  plot.append("line")
+      .attr("x1", EVzoom.iToX(0))
+      .attr("x2", EVzoom.iToX(0))
+      .attr("y1", EVzoom.axis.top)
+      .attr("y2", EVzoom.axis.bottom)
+      .attr("stroke", EVzoom.grid.color)
+      .attr("stroke-width", EVzoom.grid.lineWidth);
   plot.append("line")
       .attr("x1", EVzoom.iToX(0) + EVzoom.plotWidth())
       .attr("x2", EVzoom.iToX(0) + EVzoom.plotWidth())
