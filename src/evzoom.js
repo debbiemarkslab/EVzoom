@@ -209,7 +209,6 @@ EVzoom.groupColors = { gr:"grey", bl:"black", m0:"blue", m1:"red", c0:"#33cc00",
                        c1:"#009900", c2:"#ffff00", c3:"#33cc00", c4:"#cc0000", 
                        c5:"#0033ff", c6:"#6600cc", c7:"#0099ff", c8:"#666666",
                        c9:"#999999"};
-EVzoom.groupOrder = ["c0", "c1", "c2", "c3", "c4", "c5", "c6", "c7"];
 
 // Functions for the coordinate system
 EVzoom.plotWidth = function() { return EVzoom.axis.right - EVzoom.axis.left; };
@@ -485,6 +484,7 @@ EVzoom.update = function() {
           EVzoom.logo.nodes.hLetters[i][j]
              .transition()
              .attr("transform", "translate(" + xshift +  "," + yshift + ") rotate(0) scale(" + EVzoom.logo.fontScale + "," + scale + ")")
+             .attr("opacity",  0)
              .duration(EVzoom.logo.zoom.destroyDuration)
              .delay(EVzoom.logo.zoom.delay);
           // Transition blocks
@@ -514,6 +514,7 @@ EVzoom.update = function() {
           EVzoom.logo.nodes.vLetters[i][j]
              .transition()
              .attr("transform", "translate(" + xshift +  "," + yshift + ") rotate(90) scale(" + EVzoom.logo.fontScale + "," + scale + ")")
+             .attr("opacity",  0)
              .duration(EVzoom.logo.zoom.destroyDuration)
              .delay(EVzoom.logo.zoom.delay);
           // Transition blocks
@@ -576,6 +577,7 @@ EVzoom.update = function() {
             EVzoom.logo.nodes.hLetters[i][j]
                .transition()
                .attr("transform", "translate(" + xshift +  "," + yshift + ") rotate(0) scale(" + EVzoom.logo.zoom.fontScale + "," + scale + ")")
+               .attr("opacity",  1)
                .duration(EVzoom.logo.zoom.duration)
                .delay(EVzoom.logo.zoom.delay)
                .ease(EVzoom.logo.zoom.easeFun);
@@ -611,6 +613,7 @@ EVzoom.update = function() {
               EVzoom.logo.nodes.hLetters[i][j]
                  .transition()
                  .attr("transform", "translate(" + xshift +  "," + yshift + ") rotate(0) scale(" + EVzoom.logo.fontScale + "," + scale + ")")
+                 .attr("opacity",  0)
                  .duration(EVzoom.logo.zoom.duration)
                  .delay(EVzoom.logo.zoom.delay)
                  .ease(EVzoom.logo.zoom.easeFun);
@@ -685,6 +688,7 @@ EVzoom.update = function() {
             EVzoom.logo.nodes.vLetters[i][j]
                .transition()
                .attr("transform", "translate(" + xshift +  "," + yshift + ") rotate(90) scale(" + EVzoom.logo.zoom.fontScale + "," + scale + ")")
+               .attr("opacity",  1)
                .duration(EVzoom.logo.zoom.duration)
                .delay(EVzoom.logo.zoom.delay)
                .ease(EVzoom.logo.zoom.easeFun);
@@ -717,6 +721,7 @@ EVzoom.update = function() {
               EVzoom.logo.nodes.vLetters[i][j]
                  .transition()
                  .attr("transform", "translate(" + xshift +  "," + yshift + ") rotate(90) scale(" + EVzoom.logo.fontScale + "," + scale + ")")
+                 .attr("opacity",  0)
                  .duration(EVzoom.logo.zoom.duration)
                  .delay(EVzoom.logo.zoom.delay)
                  .ease(EVzoom.logo.zoom.easeFun);
@@ -974,7 +979,11 @@ EVzoom.buildSVG = function() {
   // Draw couplings
   EVzoom.couplings.nodes = {};
   EVzoom.couplings.nodes.circles = [];
-  EVzoom.couplings.maxRadius = 1.7 * EVzoom.focusLength(1);
+
+
+  EVzoom.couplings.maxRadius = 3 * Math.sqrt(EVzoom.focusLength(1));
+
+  // EVzoom.couplings.maxRadius = 1.7 * EVzoom.focusLength(1);
   console.log(EVzoom.focusLength(1))
   for (var c = 0; c < couplings.length; c++) {
     var node = plot.append("circle")
@@ -1069,6 +1078,7 @@ EVzoom.buildSVG = function() {
         .style("fill", EVzoom.groupColors[EVzoom.aaGroups[logo[i][j].code]])
         .style("font-size", "20px")
         .style("font-family", EVzoom.logo.font)
+        .attr("opacity", 0)
         .attr("transform", "translate(" + xshift +  "," + yshift + ") rotate(0) scale(" + EVzoom.logo.fontScale + "," + scale + ")")
         .text(logo[i][j].code);
       cumulative = cumulative + blockHeight;
@@ -1115,6 +1125,7 @@ EVzoom.buildSVG = function() {
         .style("fill", EVzoom.groupColors[EVzoom.aaGroups[logo[i][j].code]])
         .style("font-size", "20px")
         .style("font-family", EVzoom.logo.font)
+        .attr("opacity", 0)
         .attr("transform", "translate(" + xshift +  "," + yshift + ") rotate(90) scale(" + EVzoom.logo.fontScale + "," + scale + ")")
         .text(logo[i][j].code);
       cumulative = cumulative + blockHeight;
