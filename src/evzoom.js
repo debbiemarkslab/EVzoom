@@ -70,13 +70,13 @@ var EVzoom = {
       textX: 5,
       textY: 3.5,
       content: [
-        {idx: 0, label: "Positive", group: "c4"},
-        {idx: 1, label: "Polar -OH", group: "c7"},
-        {idx: 2, label: "Hydrophobic", group: "c0"},
-        {idx: 3, label: "Cysteine", group: "c2"},
-        {idx: 7, label: "Negative", group: "c5"},
-        {idx: 8, label: "Polar -CON", group: "c6"},
-        {idx: 9, label: "Aromatic", group: "c1"}
+        {idx: 0, label: "Positive", group: "positive"},
+        {idx: 1, label: "Polar -OH", group: "hydroxyl"},
+        {idx: 2, label: "Hydrophobic", group: "hydrophobic"},
+        {idx: 3, label: "Cysteine", group: "cysteine"},
+        {idx: 7, label: "Negative", group: "negative"},
+        {idx: 8, label: "Polar -CON", group: "amide"},
+        {idx: 9, label: "Aromatic", group: "aromatic"}
       ]
     },
     magnitude: {
@@ -176,10 +176,12 @@ var EVzoom = {
       padBottom: 5,
       opacity: 0.8
     },
-    cscale: d3.scaleLinear().domain([-1, 0, 1]).range(["#3374FF", "white", "#FFBE33"]) // Orange and Blue
+    // cscale: d3.scaleLinear().domain([-1, 0, 1]).range(["#3374FF", "white", "#FFBE33"]) // Orange and Blue
     // cscale: d3.scaleLinear().domain([-1, 0, 1]).range(["#018AFF", "white", "#FF7601"]) // Mandarin and Light Blue
     // cscale: d3.scaleLinear().domain([-1, 1]).range(["black", "white"])
     // cscale: d3.scaleLinear().domain([-1, 0, 1]).range(["#FF01A5", "white", "#01FF5B"]) // Magenta and Lime
+    // cscale: d3.scaleLinear().domain([-1, 0, 1]).range(["#683AB7", "white", "#FFE83F"]) // Purple and gold FFE83F
+    cscale: d3.scaleLinear().domain([-1, 0, 1]).range(["#3A2CB1", "white", "#FFCF22"]) // Purple and gold FFE83F
     // cscale: d3.scaleLinear().domain([-2, -0.8, 0, 0.8, 2]).range(["#253259", "#1F4E88", "white", "#E29C29", "#c87711"])
     // cscale: d3.scaleLinear().domain([-2, -0.8, 0, 0.8, 2]).range(["#253259", "#1F4E88", "white", "#E261A4", "#42124B"])
     // cscale: d3.scaleLinear().domain([-1, 0, 1]).range(["blue", "white", "orange"])
@@ -199,16 +201,40 @@ var EVzoom = {
   }
 }
 
+EVzoom.aaGroups = { ".":"gr", "-":"gr", "G":"hydrophobic", "A":"hydrophobic", "I":"hydrophobic", "V":"hydrophobic", 
+                    "L":"hydrophobic", "M":"hydrophobic", "F":"aromatic", "Y":"aromatic", "W":"aromatic", "H":"positive", 
+                    "C":"cysteine", "P":"hydrophobic", "K":"positive", "R":"positive", "D":"negative", "E":"negative", 
+                    "Q":"amide", "N":"amide", "S":"hydroxyl", "T":"hydroxyl"};
 // Color scheme from MSAviewer.org
-EVzoom.aaGroups = { ".":"gr", "-":"gr", "G":"c0", "A":"c0", "I":"c0", "V":"c0", 
-                    "L":"c0", "M":"c0", "F":"c1", "Y":"c1", "W":"c1", "H":"c4", 
-                    "C":"c2", "P":"c3", "K":"c4", "R":"c4", "D":"c5", "E":"c5", 
-                    "Q":"c6", "N":"c6", "S":"c7", "T":"c7", "B":"c8", "Z":"c8", 
-                    "X":"c8", "?":"c9", "*":"c8", "U":"bl"};
-EVzoom.groupColors = { gr:"grey", bl:"black", m0:"blue", m1:"red", c0:"#33cc00", 
-                       c1:"#009900", c2:"#ffff00", c3:"#33cc00", c4:"#cc0000", 
-                       c5:"#0033ff", c6:"#6600cc", c7:"#0099ff", c8:"#666666",
-                       c9:"#999999"};
+EVzoom.groupColors = {hydrophobic:"#33cc00", aromatic:"#009900", cysteine:"#ffff00", positive:"#cc0000", 
+                       negative:"#0033ff", amide:"#6600cc", hydroxyl:"#0099ff"};
+// Color scheme 1
+EVzoom.groupColors = {hydrophobic:"#FFC107", aromatic:"#FF9800", cysteine:"#8BC34A", positive:"#FF4081", 
+                       negative:"#448AFF", amide:"#5E35B1", hydroxyl:"#673AB7"};
+// Color scheme 2
+EVzoom.groupColors = {hydrophobic:"#E0E0E0", aromatic:"#BDBDBD", cysteine:"#FFC107", positive:"#FF4081", 
+                       negative:"#448AFF", amide:"#7C4DFF", hydroxyl:"#7C4DFF"};
+// Color scheme 3
+EVzoom.aaGroups = { ".":"gr", "-":"gr", "G":"hydrophobic", "A":"hydrophobic", "I":"hydrophobic", "V":"hydrophobic", 
+                    "L":"hydrophobic", "M":"hydrophobic", "F":"aromatic", "Y":"aromatic", "W":"aromatic", "H":"positive", 
+                    "C":"cysteine", "P":"hydrophobic", "K":"positive", "R":"positive", "D":"negative", "E":"negative", 
+                    "Q":"polar", "N":"polar", "S":"polar", "T":"polar"};
+EVzoom.groupColors = {hydrophobic:"#D0D0D0", aromatic:"#888888", cysteine:"#8BC34A", positive:"#F61C76", 
+                       negative:"#03A9F4", polar:"#1565C0"};
+// Color scheme 4
+EVzoom.groupColors = {hydrophobic:"#B0B0B0", aromatic:"#707070", cysteine:"#8BC34A", positive:"#F61C76", 
+                       negative:"#03A9F4", polar:"#1565C0"};
+// Color scheme 4
+EVzoom.groupColors = {hydrophobic:"#888888", aromatic:"#404040", cysteine:"#9E9D24", positive:"#F61C76", 
+                       negative:"#03A9F4", polar:"#1565C0"};
+EVzoom.legend.glyph.content = [
+        {idx: 0, label: "Positive", group: "positive"},
+        {idx: 1, label: "Polar", group: "polar"},
+        {idx: 2, label: "Hydrophobic", group: "hydrophobic"},
+        {idx: 8, label: "Cysteine", group: "cysteine"},
+        {idx: 7, label: "Negative", group: "negative"},
+        {idx: 9, label: "Aromatic", group: "aromatic"}
+      ]
 
 // Functions for the coordinate system
 EVzoom.plotWidth = function() { return EVzoom.axis.right - EVzoom.axis.left; };
@@ -845,6 +871,7 @@ EVzoom.buildSVG = function() {
                  .attr("width", EVzoom.svg.width)    
                  .attr("height", EVzoom.svg.height)
                  .attr("overflow", "visible")
+                 .style("overflow", "visible")
                  .on("mousemove", EVzoom.mouseMove);
 
   // Draw axis
