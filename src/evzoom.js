@@ -760,20 +760,20 @@ EVzoom.update = function() {
                 var ytop = ycenter + (starti - EVzoom.state.j - 0.5) * zoomLetterWidth;
                 var ybottom = ycenter + (stopi + 1 - EVzoom.state.j - 0.5) * zoomLetterWidth;
                 var xshift = EVzoom.axis.right + EVzoom.logo.zoom.lift - EVzoom.logo.zoom.underline.pad;
-                    d3.select("#vZoomLine")
-                        .transition()
-                        .attr("x1", xshift)
-                        .attr("x2", xshift)
-                        .attr("y1", ycenter)
-                        .attr("y2", ycenter)
-                        .attr("opacity", 1)
-                        .duration(0)
-                        .delay(0)
-                        .transition()
-                        .attr("y1", ytop)
-                        .attr("y2", ybottom)
-                        .duration(EVzoom.logo.zoom.underline.duration)
-                        .delay(EVzoom.logo.zoom.underline.delay);
+                d3.select("#vZoomLine")
+                    .transition()
+                    .attr("x1", xshift)
+                    .attr("x2", xshift)
+                    .attr("y1", ycenter)
+                    .attr("y2", ycenter)
+                    .attr("opacity", 1)
+                    .duration(0)
+                    .delay(0)
+                    .transition()
+                    .attr("y1", ytop)
+                    .attr("y2", ybottom)
+                    .duration(EVzoom.logo.zoom.underline.duration)
+                    .delay(EVzoom.logo.zoom.underline.delay);
                 var rad = EVzoom.logo.zoom.underline.notchRadius;
                 var notchPath1 = "M" + xshift + "," + (ycenter - rad)
                     + "L" + xshift + "," + (ycenter + rad)
@@ -1425,6 +1425,7 @@ EVzoom.prepareData = function(data) {
 
     EVzoom.prepareLogo();
     EVzoom.prepareCouplings();
+    document.getElementById("evzoom-viewer").innerHTML = '';
     EVzoom.buildSVG();
 
     // Loading timer
@@ -1438,36 +1439,30 @@ EVzoom.prepareData = function(data) {
 };
 
 // Initializer
-EVzoom.initialize = function() {
+EVzoom.initialize = function(data) {
     // Build the frame
 
     // Load the data and then setup the plot
     var url = "";
+    var tags = d3.select("#evzoom-viewer").node().getAttribute("data-couplings");
+    var urlParams = new URLSearchParams(window.location.search);
+    var dataParam = urlParams.get('data');
 
-    // Option 1) Obtain the data url from a div tag
-    var tags = d3.select("#evzoom-viewer");
-    if (!tags.empty()) {
-        url = tags.node()
-            .getAttribute("data-couplings");
-    }
+    // Option 1) Check if data is defined
+    // Option 2) Obtain the data url from a div tag
+    // Option 3) Check for a query in the URL
 
-    // Option 2) Check for a query in the URL
-    var match = "";
-    var queries = /([^&=]+)=?([^&]*)/g;
-    var searchQuery = window.location.search.substring(1);
-    while (match = queries.exec(searchQuery)) {
-        if (match.length > 2 && match[1] == "data") {
-            url = match[2];
-        }
+    if(data !== undefined && data !== null){
+        url = data;
+    } else if (tags !== undefined && tags !== null) {
+        url = tags;
+    } else if(dataParam !== undefined && dataParam !== null){
+        url = dataParam;
     }
 
     // Load the data
-    // console.log("Loading " + url)
     d3.json(url)
         .on("load", EVzoom.prepareData)
         .on("error", function(error) { console.error("failure!", error); })
         .get();
 };
-
-// Run EVzoom
-EVzoom.initialize();
