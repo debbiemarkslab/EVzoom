@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>EVzoom</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <style>
+        body{
+            font-family: 'Open Sans', sans-serif;
+            text-align: center;
+            background-color: #fafafa;
+        }
+
+        #evzoom-viewer{
+            min-height: 650px;
+            min-width: 650px;
+        }
+    </style>
+
+    <!--Loader-->
+    <style>
+        .loader {
+            font-size: 10px;
+            margin: 50px auto;
+            text-indent: -9999em;
+            width: 11em;
+            height: 11em;
+            border-radius: 50%;
+            background: #c7c7c7;
+            background: -moz-linear-gradient(left, #c7c7c7 10%, rgba(0,35,254, 0) 42%);
+            background: -webkit-linear-gradient(left, #c7c7c7 10%, rgba(0,35,254, 0) 42%);
+            background: -o-linear-gradient(left, #c7c7c7 10%, rgba(0,35,254, 0) 42%);
+            background: -ms-linear-gradient(left, #c7c7c7 10%, rgba(0,35,254, 0) 42%);
+            background: linear-gradient(to right, #c7c7c7 10%, rgba(0,35,254, 0) 42%);
+            position: relative;
+            -webkit-animation: load3 1.4s infinite linear;
+            animation: load3 1.4s infinite linear;
+            -webkit-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        .loader:before {
+            width: 50%;
+            height: 50%;
+            background: #c7c7c7;
+            border-radius: 100% 0 0 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: '';
+        }
+        .loader:after {
+            background: #fff;
+            width: 75%;
+            height: 75%;
+            border-radius: 50%;
+            content: '';
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+        @-webkit-keyframes load3 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes load3 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+<h1>
+    EVzoom
+</h1>
+<div>
+    Tool by <a href="#">Jon Ingraham</a>
+</div>
+<div>
+    <div id="evzoom-viewer">
+        <div style="width:650px; height: 650px; margin: 0 auto ;" >
+            <div class="loader"></div>
+        </div>
+    </div>
+</div>
+<div>
+    Website by <a href="http://christian.dallago.us">Christian Dallago</a>.
+</div>
+
+<script src="../dist/evzoom.js"></script>
+<script>
+    EVzoom.initialize();
+</script>
+</body>
