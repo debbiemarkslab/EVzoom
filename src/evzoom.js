@@ -900,7 +900,7 @@ EVzoom.buildSVG = function() {
 
     // Draw gridlines
     for (var i = 0; i < EVzoom.logo.data.length; i++) {
-        if (EVzoom.map.indices[i] % EVzoom.grid.spacing == 0) {
+        if (EVzoom.map.indices[i] % EVzoom.grid.spacing === 0) {
             // Horizontal
             plot.append("line")
                 .attr("x1", EVzoom.axis.left)
