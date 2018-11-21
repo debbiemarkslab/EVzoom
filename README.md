@@ -1,4 +1,6 @@
 # EVzoom
+Take it for a spin @ https://debbiemarkslab.github.io/EVzoom/
+
 [EVzoom](https://marks.hms.harvard.edu/evzoom/) is an interactive, embeddable tool for visualizing [undirected graphical models](https://en.wikipedia.org/wiki/Markov_random_field) of protein families. Since these models explicitly parameterize all possible combinations of amino acids at all pairs of positions in a sequence, they contain far too much information to depict statically.
 
 EVzoom lets you zoom in on any pair of positions in a protein family and see both inferred couplings between amino acids and [sequence logos](https://en.wikipedia.org/wiki/Sequence_logo) that summarize conservation statistics.
